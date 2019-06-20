@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE-edge'>
+        <title>VueJS</title>
+        <link rel='stylesheet' href=''>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+        <script src='vue.js'></script>
+    </head>
+    <body>
+
+        <div id = 'myApp'>
+            <h1 v-once>{{ title }}</h1>
+            <input type='text' v-on:input = 'changeTitle' />
+            <p>{{ title }} - <a v-bind:href='link'>Google</a></p>
+            <p>{{ sayHello() }}</p>
+            <p>{{ sayHelloV2() }}</p>
+            <hr>
+            <p v-html=finishedLink></p>
+            <hr>
+            <button v-on:click='increase'>Click Me</button>
+            <p>{{ counter }}</p>
+            <hr>
+            <button v-on:click='increase1(2, $event)'>Click Me</button>
+            <p>{{ counter1 }}</p>
+            <hr>
+            <p v-on:mousemove='updateCoordinates'>
+                Coordinates: {{ x }} / {{ y }}
+                - <span v-on:mousemove='dummy'>DEAD SPOT</span>
+            </p>
+            <hr>
+            <p v-on:mousemove='updateCoordinates1'>
+                Coordinates: {{ x1 }} / {{ y1 }}
+                - <span v-on:mousemove.stop=''>DEAD SPOT</span>
+            </p>
+            <hr>
+            <input type='text' v-on:keyup.enter.space='alertMe'>
+
+            <hr>
+            <p>Using Two way binding</p>
+            <input type='text' v-model='name'>
+            <p>{{ name }}</p>
+
+            <hr>
+            <p>Reacting to changes with computed properties</p>
+            <button v-on:click='decrease'>Decrease</button>
+            <button v-on:click='increase'>Increase</button>
+            <p>Counter: {{ counter }}</p>
+            <p>Resut: {{ res }}</p>
+            <hr><p>Better way doing this:</p>
+            <button v-on:click='counter--'>Decrease</button>
+            <button v-on:click='counter++'>Increase</button>
+            <button v-on:click='secondCounter++'>Increase Second</button>
+            <p>Counter: {{ counter }} | {{ secondCounter }}</p>
+            <p>Resut: {{ result() }} | {{ output }}</p>
+        </div>
+
+        <script>
+                new Vue(
+                    {
+                        el: '#myApp',
+                        data: {
+                            title: 'Salam Mohammad',
+                            link: 'http://google.com',
+                            finishedLink: '<a href="http://google.com">Google</a>',
+                            counter: 0,
+                            secondCounter: 0,
+                            counter1: 0,
+                            x: 0,
+                            y: 0,
+                            x1: 0,
+                            y1: 0,
+                            name: 'Mo',
+                            res: ''
+                        },
+
+                        computed: {
+                            output: function() {
+                                console.log('Computed');
+                                return this.counter > 5 ? 'Greater 5' : 'Smaller 5';
+                            }
+                        },
+
+                        watch: {
+                            counter: function(value) {
+                                var vm = this;
+                                setTimeout(function() {
+                                    vm.counter = 0;
+                                }, 2000);
+                            }
+                        },
+
+                        methods: {
+                            changeTitle: function(event) {
+                                this.title = event.target.value;
+                            },
+
+                            sayHello: function() {
+                                return 'Salam Majid';
+                            },
+
+                            sayHelloV2: function() {
+                                return this.title;
+                            },
+
+                            increase: function() {
+                                this.counter++;
+                                this.res = this.counter > 5 ? 'Greater 5' : 'Smaller 5';
+                            },
+                            
+                            decrease: function() {
+                                this.counter--;
+                                this.res = this.counter > 5 ? 'Greater 5' : 'Smaller 5';
+                            },
+
+                            result: function(){
+                                console.log('Method');
+                                return this.counter > 5 ? 'Greater 5' : 'Smaller 5';
+                            },
+
+                            increase1: function(step, event) {
+                                this.counter1 += step;
+                            },
+
+                            updateCoordinates: function(event) {
+                                this.x = event.clientX;
+                                this.y = event.clientY;
+                            },
+
+                            dummy: function(event) {
+                                event.stopPropagation();
+                            },
+
+                            updateCoordinates1: function(event) {
+                                this.x1 = event.clientX;
+                                this.y1 = event.clientY;
+                            },
+
+                            alertMe: function() {
+                                alert('Alert!');
+                            }
+                        }
+                    }
+                );
+        </script>                
+    </body>
+</html>
+
+
+

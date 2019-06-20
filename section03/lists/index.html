@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE-edge'>
+        <title>VueJS</title>
+        <link rel='stylesheet' href=''>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+        <script src='vue.js'></script>
+    </head>
+    <body>
+
+        <div id = 'app'>
+            <ul>
+                <li v-for='(ingredient, i) in ingredients'>{{ ingredient }} ({{ i }})</li>
+            </ul>
+
+            <hr>
+            <template v-for='(ingredient, i) in ingredients'>
+                <p>{{ ingredient }}</p>
+                <p>{{ i }}</p>
+            </template>
+
+            <hr>
+            <ul>
+                <li v-for='person in persons'>{{ person.name }}</li>
+            </ul>
+
+            <hr>
+            <ul>
+                <li v-for='person in persons'>
+                    <span v-for='value in person'>{{value}}</span>
+                </li>
+            </ul>
+
+            <hr>
+            <ul>
+                <li v-for='person in persons'>
+                    <div v-for='(value, key, index) in person'>{{key}}: {{value}} ({{index}})</div>
+                </li>
+            </ul>
+
+            <hr>
+            <span v-for='n in 10'>{{n}}</span>
+
+            <hr>
+            <ul>
+                <li v-for='(ingredient, i) in ingredients' :key="ingredient">{{ ingredient }} ({{ i }})</li>
+            </ul>
+            <button @click='ingredients.push("Kabab")'>Add New</button>
+        </div>               
+        <script src='app.js'></script>
+    </body>
+</html>
+
+
+
