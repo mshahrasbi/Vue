@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE-edge'>
+        <title>VueJS</title>
+        <link rel='stylesheet' href=''>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+        <script src='vue.js'></script>
+    </head>
+    <body>
+
+        <div id = 'app'>
+            <h1 ref="heading">{{ title }}</h1>
+
+            <button v-on:click='show' ref='myButton'>Show Paragraph</button>
+            <p v-if='showPragraph'>This is not always visible</p>
+        </div>
+
+        <div id = 'app1'>
+            <h1 ref="heading">{{ title }}</h1>
+            <button @click='onChange'>Change something in Vue 0</button>
+
+            <hello></hello>
+            <hello></hello>
+        </div>
+
+        <div id='app2'>
+
+        </div>
+
+            <script>
+
+                const myData = {
+                    title: 'Second VueJS Instance'
+                };
+
+                var vm = new Vue(
+                    {
+                        el: '#app',
+                        data: {
+                            title: 'The VueJS instance',
+                            showPragraph: false
+                        },
+
+                        computed: {
+                        },
+
+                        watch: {
+                        },
+
+                        methods: {
+                            show: function() {
+                                this.showPragraph = !this.showPragraph;
+                                if (this.showPragraph){
+                                    this.updateTitle('The VueJS instance (updated)');
+                                } else {
+                                    this.updateTitle('The VueJS instance');
+                                }
+
+                                this.$refs.myButton.innerText = 'Salam Mohammad';
+                            },
+
+                            updateTitle: function(title) {
+                                this.title = title;
+                            }
+                        }
+                    }
+                );
+
+                
+                Vue.component('Hello', {
+                    template: '<h1>Hello!</h1>'
+                });
+
+                var vm1 = new Vue({
+                    //el: '#app1',
+                    data: myData,
+
+                    methods: {
+                        onChange: function() {
+                            vm.title = 'Updated from Vue 1';
+                        }
+                    }
+                });
+
+                vm1.$mount('#app1');
+
+                setTimeout( function() {
+                    vm1.title = 'Changed by timer';
+                }, 3000);
+
+                console.log(vm1);
+                console.log(vm1.$data.title);
+                console.log(vm1.$data === myData);      
+
+                var vm2 = new Vue({
+                    template: '<h1>Hello!</h1>'
+                });          
+
+                //vm2.$mount('#app2');
+
+                //vm2.$mount();
+                //document.getElementById('app2').appendChild(vm2.$el);
+
+        </script>                
+    </body>
+</html>
+
+
+
