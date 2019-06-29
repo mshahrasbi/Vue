@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE-edge'>
+        <title>VueJS</title>
+        <link rel='stylesheet' href=''>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+        <script src='vue.js'></script>
+    </head>
+    <body>
+
+        <div id = 'app'>
+            <my-cmp></my-cmp>
+            <hr>
+            <my-cmp></my-cmp>
+        </div>
+
+        <div id = 'app2'>
+            <my-cmp></my-cmp>
+            <hr>
+            <my-cmp></my-cmp>
+        </div>
+
+        <script>
+
+            var cmp = {
+                data: function() {
+                    return {
+                        status: 'critical'
+                    };
+                },
+
+                template: '<h1>Server Status: {{ status }} (<button @click="changeStatus">Change</button>) </h1>',
+                methods: {
+                    changeStatus: function(){
+                        if (this.status === 'normal'){
+                            this.status='critical';
+                        } else {
+                            this.status='normal';
+                        }
+                    }
+                }
+            };
+
+            new Vue({
+                el: '#app',
+                components: { // setup local component
+                    'my-cmp': cmp
+                }
+            });
+
+            new Vue({ // this can use component that is registered globally
+                el: '#app2'
+            });
+        </script>                
+    </body>
+</html>
+
+
+
